@@ -18,6 +18,15 @@ helpers do
     nil
   end
 
+  def services_regex(service_regex)
+    return ServiceRegistry.instance.services.keys.grep service_regex
+  end
+
+  def services_info_regex(service_regex)
+    keys = services_regex(service_regex)
+    return services_info(keys)
+  end
+
   def services_info(services)
     content = '<div class="list-group">'
 
