@@ -1,4 +1,4 @@
-<h1 class="first-header">Gentoo Infrastructure Status</h1>
+<h1 class="first-header">BC Libraries Coop</h1>
 
 <p>This data is aggregated from our automated service monitoring system as well as the outage and maintenance notices posted below.</p>
 
@@ -6,16 +6,22 @@
 
 <div class="row">
   <div class="col-lg-4">
-    <h3>Community Services</h3>
-    <%= services_info %w[www forums wiki planet pgo lists archives] %>
+    <h3>SITKA</h3>
+    <%= services_info_regex /^sitka::/ %>
+    <h3>Hosted 3rd-parties</h3>
+    <%= services_info_regex /^thirdparty::/ %>
   </div>
   <div class="col-lg-4">
-    <h3>Development Services</h3>
-    <%= services_info %w[cvs bugzilla rsync devmanual overlays sources] %>
+    <h3>Coop Services</h3>
+    <%= services_info_regex /^coop::/ %>
+    <h3>NNELS</h3>
+    <%= services_info_regex /^nnels::/ %>
   </div>
   <div class="col-lg-4">
-    <h3>Developer Resources</h3>
-    <%= services_info %w[dgo_ssh dgo_http dgo_smtp dgo_mbox] %>
+  </div>
+  <div class="col-lg-4">
+    <h3>Conifer</h3>
+    <%= services_info_regex /^conifer::/ %>
   </div>
 </div>
 

@@ -1,4 +1,4 @@
-# infra-status.gentoo.org
+# status.libraries.coop
 # Alex Legler <a3li@gentoo.org>
 # AGPLv3
 
@@ -13,7 +13,7 @@ require_relative 'lib/notice_store'
 require_relative 'lib/service_registry'
 require_relative 'lib/helpers'
 
-MY_URL = 'http://infra-status.gentoo.org/'
+MY_URL = 'http://status.libraries.coop/'
 
 configure do
   NoticeStore.instance.update!
@@ -43,8 +43,8 @@ end
 
 get '/feed.atom' do
   rss = RSS::Maker.make('atom') do |maker|
-    maker.channel.author  = 'Gentoo Infrastructure Team'
-    maker.channel.title   = 'Gentoo Infrastructure Notices'
+    maker.channel.author  = 'BC Libraries Coop System Team'
+    maker.channel.title   = 'BC Libraries Coop Notices'
     maker.channel.link    = MY_URL
     maker.channel.id      = MY_URL
     maker.channel.updated = Time.now.to_s

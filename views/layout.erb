@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= "#{h @title} - " if @title %>Gentoo Infrastructure Status</title>
+  <title><%= "#{h @title} - " if @title %>BC Libraries Coop Infrastructure Status</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Gentoo Infrastructure Status provides information on the status of the services the Gentoo Linux distribution offers to its developers and users.">
-  <link href="https://1b9a50f4f9de4348cd9f-e703bc50ba0aa66772a874f8c7698be7.ssl.cf5.rackcdn.com/bootstrap.min.css" rel="stylesheet" media="screen">
+  <meta name="description" content="BC Libraries Coop Status provides information on the status of the services the Gentoo Linux distribution offers to its developers and users.">
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" media="screen">
   <link href="https://1b9a50f4f9de4348cd9f-e703bc50ba0aa66772a874f8c7698be7.ssl.cf5.rackcdn.com/tyrian.min.css" rel="stylesheet" media="screen">
   <link rel="icon" href="http://www.gentoo.org/favicon.ico" type="image/x-icon">
 </head>
@@ -82,7 +82,7 @@
         <p>
           Status data updated at <em><%= date_format ServiceRegistry.instance.load_date %>.</em><br />
           Notices updated at <em><%= date_format NoticeStore.instance.load_date %>.</em><br />
-          Served by <em><%= Socket.gethostname == 'avocet' ? 'infra-status-web1' : 'infra-status-web2' %>.</em>
+          Served by <em><%= Socket.gethostname == 'status' ? 'status' : 'TODO' %>.</em>
         </p>
         <p>
           Fugue iconset by <a href="http://p.yusukekamiyamane.com/">Yusuke Kamiyamane</a>.
@@ -90,12 +90,13 @@
       </div>
       <div class="col-md-4">
         <strong>Questions or comments?</strong><br/>
-        Please feel free to <a href="mailto:infra@gentoo.org">contact us</a>.
+        Please feel free to <a href="mailto:sysop@bc.libraries.coop">contact us</a>.
       </div>
     </div>
     <div class="row">
       <div class="col-md-12">
-        <strong>&copy; 2001-2014 Gentoo Foundation, Inc.</strong><br/>
+        <strong>&copy; 2014 BC Libraries Cooperative</strong><br/>
+        <strong>Status Dashboard code &copy; 2013-2014 Gentoo Foundation, Inc.</strong><br/>
         <small>
           Gentoo is a trademark of the Gentoo Foundation, Inc.
           The contents of this document, unless otherwise expressly stated, are licensed under the
@@ -107,8 +108,8 @@
   </div>
 </footer>
 
-<script src="https://1b9a50f4f9de4348cd9f-e703bc50ba0aa66772a874f8c7698be7.ssl.cf5.rackcdn.com/jquery.min.js"></script>
-<script src="https://1b9a50f4f9de4348cd9f-e703bc50ba0aa66772a874f8c7698be7.ssl.cf5.rackcdn.com/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="/assets/js/infra-status.js"></script>
 <script type="text/javascript">
   var _paq = _paq || [];
@@ -116,9 +117,9 @@
   _paq.push(["enableLinkTracking"]);
 
   (function() {
-    var u=(("https:" == document.location.protocol) ? "https" : "http") + "://piwik.gentoo.org/";
+    var u=(("https:" == document.location.protocol) ? "https" : "http") + "://piwik.libraries.coop/";
     _paq.push(["setTrackerUrl", u+"piwik.php"]);
-    _paq.push(["setSiteId", "5"]);
+    _paq.push(["setSiteId", "1"]);
     var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
     g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
   })();
