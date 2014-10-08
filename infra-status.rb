@@ -49,7 +49,7 @@ get '/feed.atom' do
     maker.channel.id      = MY_URL
     maker.channel.updated = Time.now.to_s
 
-    NoticeStore.instance.active_notices.each do |notice|
+    NoticeStore.instance.visible_notices.each do |notice|
       maker.items.new_item do |item|
         item.link = MY_URL + 'notice/' + notice['id']
         item.title = notice['title']

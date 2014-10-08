@@ -7,6 +7,7 @@
   <meta name="description" content="BC Libraries Coop Status provides information on the status of the services the Gentoo Linux distribution offers to its developers and users.">
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" media="screen">
   <link href="https://1b9a50f4f9de4348cd9f-e703bc50ba0aa66772a874f8c7698be7.ssl.cf5.rackcdn.com/tyrian.min.css" rel="stylesheet" media="screen">
+  <link href="/assets/css/infra-status.css" rel="stylesheet" media="screen">
   <link rel="icon" href="http://www.gentoo.org/favicon.ico" type="image/x-icon">
 </head>
 <body>
@@ -84,9 +85,6 @@
           Notices updated at <em><%= date_format NoticeStore.instance.load_date %>.</em><br />
           Served by <em><%= Socket.gethostname == 'status' ? 'status' : 'TODO' %>.</em>
         </p>
-        <p>
-          Fugue iconset by <a href="http://p.yusukekamiyamane.com/">Yusuke Kamiyamane</a>.
-        </p>
       </div>
       <div class="col-md-4">
         <strong>Questions or comments?</strong><br/>
@@ -101,7 +99,7 @@
           Gentoo is a trademark of the Gentoo Foundation, Inc.
           The contents of this document, unless otherwise expressly stated, are licensed under the
           <a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license">CC-BY-SA-3.0</a> license.
-          The <a href="#">Gentoo Name and Logo Usage Guidelines</a> apply.
+          The <a href="http://www.gentoo.org/main/en/name-logo.xml">Gentoo Name and Logo Usage Guidelines</a> apply.
         </small>
       </div>
     </div>

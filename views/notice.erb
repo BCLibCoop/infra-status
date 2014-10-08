@@ -26,10 +26,9 @@
       <% else %>
         <div class="col-sm-4"></div>
       <% end %>
-      <div class="col-sm-4">
-        <button class="btn btn-default pull-right btn-xs share-btn" data-toggle="popover" data-content="<button onclick='InfraStatus.share(this);' class='btn btn-default btn-sm btn-facebook'><i class='fa fa-facebook'></i></button> <button onclick='InfraStatus.share(this);' class='btn btn-default btn-sm btn-google-plus'><i class='fa fa-google-plus'></i></button> <button onclick='InfraStatus.share(this);' class='btn btn-default btn-sm btn-twitter'><i class='fa fa-twitter'></i></button>"><span class="fa fa-share"></span></button>
+      <div class="col-sm-4 has-tooltip" data-toggle="tooltip" data-placement="top" title="Estimated time of service recovery">
         <span class="glyphicon glyphicon-ok pull-left" title="Estimated time of service recovery"></span>
-        <div style="margin-left: 1.25em;" class="has-tooltip" data-toggle="tooltip" data-placement="top" title="Estimated time of service recovery">
+        <div style="margin-left: 1.25em;">
           <% if notice.has_key? 'eta' %>
             <em><%= date_format notice['eta'] %></em> (estimated)
           <% else %>

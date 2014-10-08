@@ -1,8 +1,11 @@
 # Accessing JSON data works via status_data
 # Return State::UP, State::Down, or State::Warning
-# Nagios states: 0 (ok), 1 (warning), 2 (critical), 3 (unknown), 4 (dependent)
+# Icinga states: 0 (ok), 1 (warning), 2 (critical), 3 (unknown), 4 (dependent)
+###############################################################################
+# IMPORTANT: Make your changes as well in monitoring:/etc/aggregate-icinga-data.conf
 
 Services do
+	name 'gentoo.org Website'
 	service 'www' do
 		if service_flapping? 'avocet', 'http_www' and service_flapping? 'auklet', 'http_www'
 			State::WARNING
@@ -13,6 +16,7 @@ Services do
 		end
 	end
 
+	name 'Forums'
 	service 'forums' do
 		if service_flapping? 'godwit', 'http_forums' or service_flapping? 'gannet', 'http_forums'
 			State::WARNING
@@ -23,47 +27,53 @@ Services do
 		end
 	end
 
+	name 'Wiki'
 	service 'wiki' do
-		default 'hen', 'http_wiki'
+		default 'geese', 'http_wiki'
 	end
 
+	name 'Planet Gentoo'
 	service 'planet' do
 		default 'kookaburra', 'http_planet'
 	end
 
+	name 'Package Database'
 	service 'pgo' do
 		default 'brambling', 'http_packages'
 	end
 
+	name 'Mailing Lists'
 	service 'lists' do
 		default 'pigeon', 'smtp_lists'
 	end
 
-	service 'archives' do
+	name 'Mailing List Archives'
+	service 'archives' do # archives.gentoo.org
 		default 'finch'
 	end
 
+	name 'CVS Server'
 	service 'cvs' do
-		default 'flycatcher', 'ssh_cvs'
+		default 'oystercatcher', 'ssh_cvs'
 	end
 
+	name 'Developer Manual'
 	service 'devmanual' do
 		default 'brambling', 'http_devmanual'
 	end
 
+	name 'Overlays'
 	service 'overlays' do
-		default 'spoonbill', 'http_overlays'
+		default 'oystercatcher', 'http_overlays'
 	end
 	
-	service 'tinderbox' do
-		default 'tinderbox.dev'
-	end
-
+	name 'Source Code Browser'
 	service 'sources' do
 		default 'motmot', 'http_sources'
 	end
 
-	service 'rsync' do
+	name 'Master <kbd>rsync</kbd> Mirror'
+	service 'rsync' do # master rsync
 		if host_flapping? 'albatross' or host_flapping? 'dipper'
 			State::WARNING
 		elsif host_up? 'albatross' and host_up? 'dipper'
@@ -73,6 +83,7 @@ Services do
 		end
 	end
 
+	name 'Bugzilla'
 	service 'bugzilla' do
 		if service_flapping? 'yellowbishop', 'http_bugs' or service_flapping? 'yellowleg', 'http_bugs'
 			State::WARNING
@@ -85,19 +96,23 @@ Services do
 		end
 	end
 
-	service 'dgo_ssh' do
+	name '<kbd>dev.gentoo.org</kbd> Shell Access'
+	service 'dgo_ssh' do # dev.gentoo.org SSH
 		default 'woodpecker', 'ssh_dgo'
 	end
 	
-	service 'dgo_http' do
+	name '<kbd>dev.gentoo.org</kbd> Web Hosting'
+	service 'dgo_http' do # dev.gentoo.org HTTP
 		default 'woodpecker', 'http_dev_ssl'
 	end
 
-	service 'dgo_smtp' do
+	name 'In-/Outbound Email (SMTP)'
+	service 'dgo_smtp' do # dev.gentoo.org SMTP
 		default 'woodpecker', 'smtp_dgo'
 	end
 
-	service 'dgo_mbox' do
+	name 'Mailbox Access (POP/IMAP)'
+	service 'dgo_mbox' do # dev.gentoo.org IMAP/POP
 		default 'woodpecker', 'imap_dgo'
 	end
 end

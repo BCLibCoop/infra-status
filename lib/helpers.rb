@@ -39,11 +39,12 @@ helpers do
       service_name = service_array.nil? ? 'UNKNOWN NAME' : service_array[:name] 
       data_service_name = service_name.gsub('"', "'")
       content << "
-        <a class=\"list-group-item has-tooltip notice-link\" href=\"#notices\" title=\"#{_status_text}\"
+        <a class=\"list-group-item has-tooltip notice-link status-#{_service_status}\" href=\"#notices\" title=\"#{_status_text}\"
            data-toggle=\"tooltip\" data-placement=\"top\" data-container=\"body\"
            data-service=\"#{service}\" data-service-name=\"#{data_service_name}\">
-        #{_service_info}
+
         #{service_name}
+        #{_service_info}
         </a>"
     end
 
@@ -93,15 +94,15 @@ helpers do
   def status_icon(status)
     case status.to_s
       when 'up'
-        return '<img src="/icons/status_up.png" alt="The service is up and running." title="The service is up and running." class="pull-right" />'
+        return '<i class="status-icon fa fa-fw fa-check-square" title="The service is up and running"></i>'
       when 'down'
-        return '<img src="/icons/status_down.png" alt="There are indications the service is down." title="There are indications the service is down." class="pull-right" />'
+        return '<i class="status-icon fa fa-fw fa-times-circle" title="There are indications the service is down."></i>'
       when 'warning'
-        return '<img src="/icons/status_warning.png" alt="There are issues with the service." title="There are issues with the service." class="pull-right" />'
+        return '<i class="status-icon fa fa-fw fa-warning" title="There are issues with the service."></i>'
       when 'maintenance'
-        return '<img src="/icons/maintenance.png" alt="The service is undergoing scheduled maintenance." title="The service is undergoing scheduled maintenance." class="pull-right" />'
+        return '<i class="status-icon fa fa-fw fa-wrench" title="The service is undergoing scheduled maintenance."></i>'
       else
-        return '<img src="/icons/na.png" alt="No data available." title="No data available." class="pull-right" />'
+        return '<i class="status-icon fa fa-fw fa-question" title="No data available."></i>'
     end
   end
 
@@ -123,11 +124,11 @@ helpers do
   def item_icon(type)
     case type.to_s
       when 'maintenance'
-        return '<img src="/icons/maintenance.png" alt="Scheduled maintenance" title="Scheduled maintenance" style="vertical-align: text-top;" />'
+        return '<i class="fa fa-wrench"></i>'
       when 'outage'
-        return '<img src="/icons/outage.png" alt="Unplanned outage" title="Unplanned outage" style="vertical-align: text-top;" />'
+        return '<i class="glyphicon glyphicon-fire"></i>'
       when 'information'
-        return '<img src="/icons/information.png" alt="General information" title="General information" style="vertical-align: text-top;" />'
+        return '<i class="fa fa-info-circle"></i>'
     end
   end
 
@@ -135,7 +136,7 @@ helpers do
     if date.nil?
       'n/a'
     else
-      date.rfc2822
+      date.httpdate
     end
   end
 

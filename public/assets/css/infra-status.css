@@ -1,0 +1,28 @@
+i.status-icon {
+	vertical-align: baseline;
+	font-size: 140%;
+	float: right;
+	margin-right: -0.3em;
+}
+
+.status-up .status-icon {
+	color: #49a052;
+	color: #65B812;
+}
+
+.status-down .status-icon {
+	color: #a94442;
+	color: #cc0000;
+}
+
+.status-maintenance .status-icon {
+	color: #777;
+}
+
+.status-warning .status-icon {
+	color: #edd400;
+}
+
+.active .status-icon {
+	color: white;
+}
