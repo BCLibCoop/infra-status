@@ -67,7 +67,7 @@ module HelperMethods
     else
       return State::NA unless has_service? host, service
 
-      if service_flapping? host, service
+      if service_flapping? host, service or service_warning? host, service
         State::WARNING
       elsif service_up? host, service
         State::UP
