@@ -45,6 +45,12 @@ module HelperMethods
         status_data['services'][host][service]['is_flapping'] != 0
   end
 
+  def service_warning?(host, service)
+    status_data['services'].has_key?(host) and
+        status_data['services'][host].has_key?(service) and
+        status_data['services'][host][service]['current_state'] == 1
+  end
+
   def has_service?(host, service)
     status_data['services'][host].has_key?(service)
   end
