@@ -98,7 +98,14 @@ class ServiceRegistry
   def service(name, &block)
     @services[name] = {}
     @services[name][:name] = @next_name || name
-    @services[name][:status] = block.call
+
+    begin
+      @services[name][:status] = block.call
+    rescue Exception => e
+      @services[name][:status] = State::NA
+      $stderr.puts e
+    end
+
     @next_name = nil
   end
 
@@ -119,7 +126,8 @@ class ServiceRegistry
     load(File.join(File.dirname(__FILE__), '..', 'data', 'services.rb'))
     @load_date = DateTime.now
     @cache_locked = false
-  rescue Exception
+  rescue Exception => e
+    $stderr.puts e
     @services = {}
     @load_date = DateTime.new(2000, 1, 1)
     @cache_locked = false
