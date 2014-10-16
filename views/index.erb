@@ -6,22 +6,13 @@
 
 <div class="row">
   <div class="col-lg-4">
-    <h3>SITKA</h3>
-    <%= services_info_regex /^sitka::/ %>
-    <h3>Hosted 3rd-parties</h3>
-    <%= services_info_regex /^thirdparty::/ %>
+    <%= render_column 1 %>
   </div>
   <div class="col-lg-4">
-    <h3>Coop Services</h3>
-    <%= services_info_regex /^coop::/ %>
-    <h3>NNELS</h3>
-    <%= services_info_regex /^nnels::/ %>
+    <%= render_column 2 %>
   </div>
   <div class="col-lg-4">
-  </div>
-  <div class="col-lg-4">
-    <h3>Conifer</h3>
-    <%= services_info_regex /^conifer::/ %>
+    <%= render_column 3 %>
   </div>
 </div>
 

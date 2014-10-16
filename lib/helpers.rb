@@ -18,6 +18,17 @@ helpers do
     nil
   end
 
+  def render_column(id)
+    content = ''
+
+    ServiceRegistry.instance.columns[id].each do |category|
+      content << "<h3>%s</h3>\n" % category
+      content << services_info(ServiceRegistry.instance.categories[category][:services])
+    end
+
+    content
+  end
+
   def services_regex(service_regex)
     return ServiceRegistry.instance.services.keys.grep service_regex
   end
