@@ -81,6 +81,8 @@ end
 class ServiceRegistry
   CACHE_SECONDS = 600
   StatusSource = File.join(File.dirname(__FILE__), '..', 'data', 'status.json')
+  ServiceConfig = File.join(File.dirname(__FILE__), '..', 'data','services.rb')
+  DefaultDateTime = DateTime.new(2000, 1, 1)
 
   include Singleton
   include HelperMethods
@@ -147,7 +149,7 @@ class ServiceRegistry
     @categories = {}
     @columns = {1 => [], 2 => [], 3 => []}
     @status_data = JSON.parse(File.read(StatusSource))
-    load(File.join(File.dirname(__FILE__), '..', 'data', 'services.rb'))
+    load(ServiceConfig)
     @load_date = DateTime.now
     @cache_locked = false
   rescue Exception => e
@@ -155,13 +157,15 @@ class ServiceRegistry
     @services = {}
     @categories = {}
     @columns = {1 => [], 2 => [], 3 => []}
-    @load_date = DateTime.new(2000, 1, 1)
+    @load_date = DefaultDateTime
     @cache_locked = false
   end
 
   private
   def update?
-    if not @load_date.nil? and not @cache_locked and ((DateTime.now - @load_date) * 60 * 60 * 24).to_i > CACHE_SECONDS
+    load_age = ((DateTime.now - (@load_date || DefaultDateTime)) * 60 * 60 * 24).to_i
+    is_old = load_age > CACHE_SECONDS
+    if not @cache_locked and not @load_date.nil? and is_old
       update!
     end
   end
