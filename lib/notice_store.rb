@@ -6,7 +6,7 @@ require 'singleton'
 # Automatically refreshes the cache after CACHE_SECONDS seconds.
 class NoticeStore
   include Singleton
-  CACHE_SECONDS = 600
+  CACHE_SECONDS = 60
   attr_reader :load_date
 
   def initialize

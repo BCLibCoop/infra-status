@@ -79,7 +79,7 @@ module HelperMethods
 end
 
 class ServiceRegistry
-  CACHE_SECONDS = 600
+  CACHE_SECONDS = 60
   StatusSource = File.join(File.dirname(__FILE__), '..', 'data', 'status.json')
   ServiceConfig = File.join(File.dirname(__FILE__), '..', 'data','services.rb')
   DefaultDateTime = DateTime.new(2000, 1, 1)
