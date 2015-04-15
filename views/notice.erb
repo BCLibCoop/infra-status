@@ -12,16 +12,15 @@
         <div style="margin-left: 1.25em"><em><%= date_format notice['created_at'] %></em></div>
       </div>
       <% if notice.has_key? 'starts_at' %>
-        <div class="col-sm-4 has-tooltip" data-toggle="tooltip" data-placement="top" title="Maintenance start time">
-        <% diff = ((DateTime.now - notice['starts_at']) * 24 * 60 * 60).to_i %>
+        <%- diff = ((DateTime.now - notice['starts_at']) * 24 * 60 * 60).to_i %>
+        <div class="col-sm-4 has-tooltip" data-toggle="tooltip" data-placement="top"
+        <% if diff < 0 %>
+          title="Maintenance starts in <%= humanize(-diff) %>"
+        <% else %>
+          title="Maintenance started <%= humanize(diff) %> ago"
+        <% end %>>
           <span class="glyphicon glyphicon-wrench pull-left" title="Maintenance start time"></span>
-          <div style="margin-left: 1.25em;"><em><%= date_format notice['starts_at'] %></em><br>
-            <% if diff < 0 %>
-              (in <em><%= humanize(-diff) %></em>)
-            <% else %>
-              (<em><%= humanize(diff) %></em> ago)
-            <% end %>
-          </div>
+          <div style="margin-left: 1.25em;"><em><%= date_format notice['starts_at'] %></em></div>
         </div>
       <% else %>
         <div class="col-sm-4"></div>
