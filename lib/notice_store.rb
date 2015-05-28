@@ -1,5 +1,6 @@
 require 'yaml'
 require 'date'
+require 'active_support/time'
 require 'singleton'
 
 # Stores notices and caches them in memory.
@@ -93,6 +94,8 @@ class Notice
     content = File.read(filename)
     metadata = YAML.load(content) || {}
     metadata['updated_at'] = File.mtime(filename)
+    metadata['timezone'] = 'UTC' unless metadata.has_key? 'timezone'
+    Time.zone = metadata['timezone']
     description = 'missing description'
     description_splitpos = nil
 
@@ -134,7 +137,7 @@ class Notice
     @metadata = metadata
 
     %w[created_at eta expire_at starts_at].each do |key|
-      @metadata[key] = DateTime.parse(@metadata[key]) if @metadata.has_key? key
+      @metadata[key] = Time.zone.parse(@metadata[key]).in_time_zone(@metadata['timezone']) if @metadata.has_key? key
     end
 
     @metadata['id'] = id
