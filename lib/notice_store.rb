@@ -94,7 +94,11 @@ class Notice
     content = File.read(filename)
     metadata = YAML.load(content) || {}
     metadata['updated_at'] = File.mtime(filename)
-    metadata['timezone'] = 'UTC' unless metadata.has_key? 'timezone'
+    metadata = {
+      'timezone': 'UTC',
+      'markup_language': 'markdown',
+    }.merge(metadata)
+
     Time.zone = metadata['timezone']
     description = 'missing description'
     description_splitpos = nil
