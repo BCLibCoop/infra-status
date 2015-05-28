@@ -27,7 +27,7 @@ class NoticeStore
 
     @notices.sort! { |a, b| b['created_at'] <=> a['created_at'] }
 
-    @load_date = DateTime.now
+    @load_date = DateTime.now # UTC
   end
 
   def notices
@@ -83,7 +83,7 @@ class NoticeStore
 
   private
   def update?
-    if ((DateTime.now - @load_date) * 60 * 60 * 24).to_i > CACHE_SECONDS
+    if ((DateTime.now - @load_date) * 60 * 60 * 24).to_i > CACHE_SECONDS # UTC
       update!
     end
   end
