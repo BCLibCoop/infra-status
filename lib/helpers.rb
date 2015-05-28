@@ -169,7 +169,7 @@ helpers do
     if date.nil?
       'n/a'
     else
-      date.httpdate
+      date.inspect
     end
   end
 
