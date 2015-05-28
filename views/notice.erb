@@ -3,7 +3,7 @@
     <h3 class="panel-title"><%= item_icon notice['type']%> <a href="/notice/<%= h notice['id'] %>"><%= h notice['title'] %></a></h3>
   </div>
   <div class="panel-body">
-    <%= markdown notice.get_content %>
+    <%= htmlize_notice notice %>
   </div>
   <div class="panel-footer">
     <div class="row">

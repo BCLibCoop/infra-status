@@ -3,6 +3,28 @@ helpers do
     Rack::Utils.escape_html(text)
   end
 
+  def htmlize_notice(notice)
+      htmlize_text(notice.get_content, notice['markup_language'])
+  end
+
+  def htmlize_text(text, markup_language)
+    case markup_language.downcase
+    when 'markdown'
+        return markdown(text)
+    when 'asciidoc', 'asciidoctor'
+        return asciidoctor(text)
+    when 'raw'
+        return text
+    else
+        return 'Unknown document format'
+    end
+  end
+
+  def asciidoctor(text)
+    doc = Asciidoctor::Document.new(text)
+    doc.render
+  end
+
   def markdown(text)
     markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, :autolink => true, :space_after_headers => true)
     markdown.render(text)

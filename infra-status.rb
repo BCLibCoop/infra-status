@@ -6,6 +6,7 @@ require 'bundler/setup'
 require 'sinatra'
 require 'sinatra/partial'
 require 'redcarpet'
+require 'asciidoctor'
 require 'rss'
 require 'socket'
 
@@ -55,7 +56,7 @@ get '/feed.atom' do
         item.link = MY_URL + 'notice/' + notice['id']
         item.title = notice['title']
         item.updated = notice['updated_at'].to_s
-        item.description = markdown(notice.get_content)
+        item.description = htmlize_notice(notice)
       end
     end
   end
