@@ -95,8 +95,8 @@ class Notice
     metadata = YAML.load(content) || {}
     metadata['updated_at'] = File.mtime(filename)
     metadata = {
-      'timezone': 'UTC',
-      'markup_language': 'markdown',
+      'timezone' => 'UTC',
+      'markup_language' => 'markdown',
     }.merge(metadata)
 
     Time.zone = metadata['timezone']
