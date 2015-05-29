@@ -12,7 +12,7 @@
         <div style="margin-left: 1.25em"><em><%= date_format notice['created_at'] %></em></div>
       </div>
       <% if notice.has_key? 'starts_at' %>
-        <%- diff = ((DateTime.now - notice['starts_at']) * 24 * 60 * 60).to_i %>
+        <%- diff = (DateTime.now.to_i - notice['starts_at'].to_i)  %>
         <div class="col-sm-4 has-tooltip" data-toggle="tooltip" data-placement="top"
         <% if diff < 0 %>
           title="Maintenance starts in <%= humanize(-diff) %>"
