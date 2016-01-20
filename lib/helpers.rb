@@ -166,11 +166,23 @@ helpers do
   end
 
   def date_format(date)
+    status_date = ''
     if date.nil?
-      'n/a'
+      status_date << 'n/a'
     else
-      date.inspect
+      cur_time = Time.now
+      secs = (cur_time.to_i-date.to_time.to_i).abs
+      if secs > 900
+        status_date << '<span class=status_update_critical>'
+      elsif (secs > 300) and (secs <= 900)
+        status_date << '<span class=status_update_warning>'
+      else
+        status_date << '<span class=status_update_normal>'
+      end
+      status_date << date.inspect
+      status_date << '</span>'
     end
+    return status_date
   end
 
   def humanize(secs)
