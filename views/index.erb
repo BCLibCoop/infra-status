@@ -5,7 +5,7 @@
         <p class="spacer">
           Status data updated at <em><%= date_format ServiceRegistry.instance.load_date %></em><br />
           Notices updated at <em><%= date_format NoticeStore.instance.load_date %></em><br />
-          Served by <em><%= Socket.gethostname == 'ns-ext' ? 'https://icinga-ext.libraries.coop' : 'TODO' %></em>
+          Served by <em><%= Socket.gethostname == 'ns-ext' ? 'https://status-ext.libraries.coop' : 'https://status.libraries.coop' %></em>
         </p>
 </div>
 
@@ -23,6 +23,6 @@
   </div>
 </div>
 
-<h2 id="notices">Maintenance and Outage Notices <small id="notices-for"></small></h2>
+<h2 id="notices">Notices <small id="notices-for"></small></h2>
 
 <%= partial :notice, :collection => NoticeStore.instance.visible_notices %>
