@@ -150,7 +150,7 @@ class ServiceRegistry
     @columns = {1 => [], 2 => [], 3 => []}
     @status_data = JSON.parse(File.read(StatusSource))
     load(ServiceConfig)
-    @load_date = DateTime.now
+    @load_date = File.mtime(File.expand_path(StatusSource)).to_datetime
     @cache_locked = false
   rescue Exception => e
     $stderr.puts e
