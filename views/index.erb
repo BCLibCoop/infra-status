@@ -1,7 +1,7 @@
 <h1 class="first-header">BC Libraries Coop</h1>
 
 <p>This data is aggregated from our automated service monitoring system as well as the outage and maintenance notices posted below.</p>
-<div class="row">
+<div class="status row">
         <p class="spacer">
           Status data updated at <em><%= date_format ServiceRegistry.instance.load_date %></em><br />
           Notices updated at <em><%= date_format NoticeStore.instance.load_date %></em><br />
@@ -11,7 +11,7 @@
 
 <h2>Service Availability Overview</h2>
 
-<div class="row">
+<div class="services row">
   <div class="col-lg-4">
     <%= render_column 1 %>
   </div>

@@ -44,3 +44,8 @@ span.status_update_critical {
     font-size: 120%;
     color: Crimson;
 }
+
+.stale-layer {
+  background-color: rgba(40, 47, 53, 0.55);
+  z-index: 130;
+}

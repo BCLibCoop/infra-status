@@ -1,3 +1,22 @@
+jQuery( document ).ready(function() {
+//jQuery(function () {
+    status = $('.status.row .status_update_critical').length;
+
+    if (status > 0) {
+        services = $('.services.row');
+        services.append('<div class="stale-layer"></div>');
+        servpos = services.position();
+
+        $('.stale-layer').css({
+          position: 'absolute',
+          top: servpos.top,
+          left: servpos.left,
+	  width: $('.services').width(),
+          height: $('.services').height()
+        });
+    }
+});
+
 // from http://stackoverflow.com/questions/4399005/implementing-jquerys-shake-effect-with-animate
 // replacement for broken Effect.Shake from JQuery UI
 jQuery.fn.shake = function (steps, duration, amount, vertical) {
