@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="BC Libraries Coop Status provides information on the status of the services the Gentoo Linux distribution offers to its developers and users.">
+  <meta http-equiv="refresh" content="20">
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" media="screen">
   <link href="https://1b9a50f4f9de4348cd9f-e703bc50ba0aa66772a874f8c7698be7.ssl.cf5.rackcdn.com/tyrian.min.css" rel="stylesheet" media="screen">
   <link href="/assets/css/infra-status.css" rel="stylesheet" media="screen">
@@ -130,18 +131,23 @@
 <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="/assets/js/infra-status.js"></script>
+
+<!-- Piwik -->
 <script type="text/javascript">
   var _paq = _paq || [];
-  _paq.push(["trackPageView"]);
-  _paq.push(["enableLinkTracking"]);
-
+  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(["setDomains", ["*.nagios.sitka.bclibraries.ca/public/dashboard","*.status.libraries.coop","*.status.libraries.coop"]]);
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
   (function() {
-    var u=(("https:" == document.location.protocol) ? "https" : "http") + "://piwik.libraries.coop/";
-    _paq.push(["setTrackerUrl", u+"piwik.php"]);
-    _paq.push(["setSiteId", "1"]);
-    var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
-    g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
+    var u="//piwik.libraries.coop/piwik/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
   })();
 </script>
+<!-- End Piwik Code -->
+
 </body>
 </html>
