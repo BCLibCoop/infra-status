@@ -1,0 +1,253 @@
+# Accessing JSON data works via status_data
+# Return State::NA, State::Down, or State::Warning
+# Nagios states: 0 (ok), 1 (warning), 2 (critical), 3 (unknown), 4 (dependent)
+
+Services do
+
+	# SITKA
+	name 'Evergreen'
+	service 'sitka::www' do
+# XXX:kjw
+		default 'compute01.libraries.coop', 'sitka::www'
+		# default 'interim-loghost', 'sitka::www'
+	end
+
+	name 'Reporter'
+	service 'sitka::reporter' do
+		default 'eg-util1.libraries.coop', 'sitka::reporter'
+	end
+
+	name 'Fines'
+	service 'sitka::fines' do
+		default 'eg-util1.libraries.coop', 'sitka::fines'
+	end
+
+	name 'Holds'
+	service 'sitka::holds' do
+		default 'eg-util1.libraries.coop', 'sitka::holds'
+	end
+
+	name 'SIP2'
+	service 'sitka::sip2' do
+		default 'eg-util1.libraries.coop', 'sitka::sip2'
+	end
+
+	name 'Capacity'
+	service 'sitka::capacity' do
+		status = State::NA
+                total_up = 0
+                total_down = 0
+                hosts = ['eg-app1.libraries.coop', 'eg-app2.libraries.coop', 'eg-app3.libraries.coop'];
+                hosts.each do |host|
+                        if service_up? host, 'sitka::capacity'
+                                total_up += 1;
+                        else
+                                total_down += 1;
+                        end
+                end
+                if total_up == 0
+                        status = State::DOWN
+                elsif total_up >= 2
+                        status = State::UP
+                else
+                        status = State::WARNING
+                end
+                status
+	end
+
+	name 'Z39.50'
+	service 'sitka::z3950' do
+		default 'eg-util1.libraries.coop', 'sitka::z3950'
+	end
+
+	name 'EDI'
+	service 'sitka::edi' do
+		default 'eg-util1.libraries.coop', 'sitka::edi'
+	end
+
+	# Coop Services
+	name 'Email (SMTP/IMAP)'
+	service 'coop::email' do
+		if service_up? 'mail.libraries.coop', 'coop::smtp' and service_up? 'mail.libraries.coop', 'coop::imap'
+			State::UP
+		else
+			State::DOWN
+		end
+	end
+	
+	name 'Webmail'
+	service 'coop::webmail' do
+		default 'webmail02.libraries.coop', 'coop::webmail'
+	end
+
+	name 'CoopWeb'
+	service 'coop::www' do
+		default 'coopweb01.libraries.coop', 'coop::www'
+	end
+
+	name 'Piwik'
+	service 'coop::piwik' do
+		default 'piwik.libraries.coop', 'coop::piwik'
+	end
+
+	name 'VM hosting'
+	service 'coop::ganeti' do
+		default 'Ganeti-VRRP', 'coop::vmhost'
+	end
+	name 'BCNET'
+	service 'coop::bcnet' do
+		if service_warning? 'router1.sitka.bclibraries.ca', 'coop::bcnet' and service_warning? 'router2.sitka.bclibraries.ca', 'coop::bcnet'
+			State::DOWN
+		elsif service_up? 'router1.sitka.bclibraries.ca', 'coop::bcnet' or service_up? 'router2.sitka.bclibraries.ca', 'coop::bcnet'
+			State::UP
+		else
+			State::DOWN
+		end
+	end
+
+	name 'Internal DNS'
+	service 'coop::dns' do
+		default 'resolver1.libraries.coop', 'coop::dns'
+	end
+	name 'PBX'
+	service 'coop::pbx' do
+		default 'newpbx.libraries.coop'
+	end
+	name 'MySQL'
+	service 'coop::mysql' do
+		default 'ndb2.libraries.coop', 'coop::mysql'
+	end
+	name 'PostgreSQL'
+	service 'coop::pgsql' do
+		status = State::NA
+		total_up = 2
+		total_down = 0
+		hosts = ['ndb1-sitka.libraries.coop', 'ndb2-sitka.libraries.coop'];
+		hosts.each do |host|
+			if service_up? host, 'coop::pgsql'
+				total_up += 1;
+			else
+				total_down += 1;
+			end
+		end
+		if total_up == 0 and total_down > 0
+			status = State::DOWN
+		elsif total_down == 0 and total_up > 0
+			status = State::UP
+		elsif total_down > 0 and total_up > 0
+			status = State::WARNING
+		else
+			status = State::NA
+		end
+		# but the virtual IP is what we are moving to
+		if not service_up? 'Prod-DB-PgSQL-VIP', 'coop::pgsql'
+			status = State::DOWN
+		end
+		status	
+	end
+
+	name 'Request Tracker'
+	service 'coop::rt' do
+		default 'rt-prod.libraries.coop', 'coop::rt'
+	end
+
+	# NNELS
+	name 'NNELS'
+	service 'nnels::www' do
+		default 'nnels-prod.libraries.coop', 'nnels::www'
+	end
+
+	# 3rd-party
+	name 'CAPER'
+	service 'thirdparty::caper' do
+		default 'caperbc.libraries.coop', 'thirdparty::cilswp'
+	end
+
+	name 'FILL'
+	service 'thirdparty::fill' do
+		default 'fill-prod2.libraries.coop', 'thirdparty::fill'
+	end
+
+	name 'Available'
+	service 'thirdparty::wbtw' do
+		default 'wbtw.libraries.coop', 'thirdparty::wbtw'
+	end
+
+	name 'BCLA'
+	service 'thirdparty::bcla' do
+		default 'bcla-prod2.libraries.coop', 'thirdparty::bcla'
+	end
+
+	name 'KAPA'
+	service 'thirdparty::kapa' do
+		default 'kapa.libraries.coop', 'thirdparty::kapa'
+	end
+
+	name 'Available'
+	service 'thirdparty::kapa2' do
+		default 'kapa2.libraries.coop', 'thirdparty::kapa2'
+	end
+
+	# Conifer 
+	name 'Evergreen'
+	service 'conifer::www' do
+		default 'cprod1.sitka.bclibraries.ca', 'conifer::capacity'
+	end
+
+	name 'Reporter'
+	service 'conifer::reporter' do
+		default 'cprod1.sitka.bclibraries.ca', 'conifer::reporter'
+	end
+
+	name 'Fines'
+	service 'conifer::fines' do
+		default 'cprod1.sitka.bclibraries.ca', 'conifer::fines'
+	end
+
+	name 'Holds'
+	service 'conifer::holds' do
+		default 'cprod1.sitka.bclibraries.ca', 'conifer::holds'
+	end
+
+	name 'SIP2'
+	service 'conifer::sip2' do
+		default 'cprod1.sitka.bclibraries.ca', 'conifer::sip2'
+	end
+
+	name 'Capacity'
+	service 'conifer::capacity' do
+		default 'cprod1.sitka.bclibraries.ca', 'conifer::capacity'
+	end
+
+	name 'Z39.50'
+	service 'conifer::z3950' do
+		default 'cprod1.sitka.bclibraries.ca', 'conifer::z3950'
+	end
+
+	name 'EDI'
+	service 'conifer::edi' do
+		State::NA
+	end
+
+	# Sadly, we cannot use our regex to pull out the above stuff
+	category 'SITKA' do
+		column 1
+		%w[www reporter fines holds sip2 capacity z3950 edi].map { |s| "sitka::"+s }
+	end
+	category 'Hosted 3rd-parties' do
+		column 1
+		%w[caper fill wbtw bcla kapa kapa2].map { |s| "thirdparty::"+s }
+	end
+	category 'Coop Services' do
+		column 2
+		%w[email webmail www piwik ganeti bcnet dns pbx mysql pgsql rt].map { |s| 'coop::'+s }
+	end
+	category 'NNELS' do
+		column 2
+		%w[www].map { |s| "nnels::"+s }
+	end
+	category 'Conifer' do
+		column 3
+		%w[www reporter fines holds sip2 capacity z3950 edi].map { |s| "conifer::"+s }
+	end
+end

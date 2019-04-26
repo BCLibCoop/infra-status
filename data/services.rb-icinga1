@@ -1,0 +1,253 @@
+# Accessing JSON data works via status_data
+# Return State::NA, State::Down, or State::Warning
+# Nagios states: 0 (ok), 1 (warning), 2 (critical), 3 (unknown), 4 (dependent)
+
+Services do
+
+	# SITKA
+	name 'Evergreen'
+	service 'sitka::www' do
+# XXX:kjw
+		# default 'backup0', 'sitka::www'
+		default 'interim-loghost', 'sitka::www'
+	end
+
+	name 'Reporter'
+	service 'sitka::reporter' do
+		default 'utility1', 'sitka::reporter'
+	end
+
+	name 'Fines'
+	service 'sitka::fines' do
+		default 'utility1', 'sitka::fines'
+	end
+
+	name 'Holds'
+	service 'sitka::holds' do
+		default 'utility1', 'sitka::holds'
+	end
+
+	name 'SIP2'
+	service 'sitka::sip2' do
+		default 'sip2', 'sitka::sip2'
+	end
+
+	name 'Capacity'
+	service 'sitka::capacity' do
+		status = State::NA
+                total_up = 0
+                total_down = 0
+                hosts = ['app1', 'app2', 'app3'];
+                hosts.each do |host|
+                        if service_up? host, 'sitka::capacity'
+                                total_up += 1;
+                        else
+                                total_down += 1;
+                        end
+                end
+                if total_up == 0
+                        status = State::DOWN
+                elsif total_up >= 2
+                        status = State::UP
+                else
+                        status = State::WARNING
+                end
+                status
+	end
+
+	name 'Z39.50'
+	service 'sitka::z3950' do
+		default 'utility1', 'sitka::z3950'
+	end
+
+	name 'EDI'
+	service 'sitka::edi' do
+		default 'utility1', 'sitka::edi'
+	end
+
+	# Coop Services
+	name 'Email (SMTP/IMAP)'
+	service 'coop::email' do
+		if service_up? 'mail', 'coop::smtp' and service_up? 'mail', 'coop::imap'
+			State::UP
+		else
+			State::DOWN
+		end
+	end
+	
+	name 'Webmail'
+	service 'coop::webmail' do
+		default 'webmail01', 'coop::webmail'
+	end
+
+	name 'CoopWeb'
+	service 'coop::www' do
+		default 'coopweb', 'coop::www'
+	end
+
+	name 'Piwik'
+	service 'coop::piwik' do
+		default 'piwik', 'coop::piwik'
+	end
+
+	name 'VM hosting'
+	service 'coop::ganeti' do
+		default 'Ganeti-VRRP', 'coop::vmhost'
+	end
+	name 'BCNET'
+	service 'coop::bcnet' do
+		if service_warning? 'router1', 'coop::bcnet' and service_warning? 'router2', 'coop::bcnet'
+			State::DOWN
+		elsif service_up? 'router1', 'coop::bcnet' or service_up? 'router2', 'coop::bcnet'
+			State::UP
+		else
+			State::DOWN
+		end
+	end
+
+	name 'Internal DNS'
+	service 'coop::dns' do
+		default 'asbestos', 'coop::dns'
+	end
+	name 'PBX'
+	service 'coop::pbx' do
+		default 'freepbx'
+	end
+	name 'MySQL'
+	service 'coop::mysql' do
+		default 'Prod-DB-MySQL-VIP', 'coop::mysql'
+	end
+	name 'PostgreSQL'
+	service 'coop::pgsql' do
+		status = State::NA
+		total_up = 0
+		total_down = 0
+		hosts = ['db1-sitka', 'db2-sitka'];
+		hosts.each do |host|
+			if service_up? host, 'coop::pgsql'
+				total_up += 1;
+			else
+				total_down += 1;
+			end
+		end
+		if total_up == 0 and total_down > 0
+			status = State::DOWN
+		elsif total_down == 0 and total_up > 0
+			status = State::UP
+		elsif total_down > 0 and total_up > 0
+			status = State::WARNING
+		else
+			status = State::NA
+		end
+		# but the virtual IP is what we are moving to
+		if not service_up? 'Prod-DB-PgSQL-VIP', 'coop::pgsql'
+			status = State::DOWN
+		end
+		status	
+	end
+
+	name 'SSO Authentication (LDAP)'
+	service 'coop::ldap' do
+		State::NA
+	end
+
+	# NNELS
+	name 'NNELS'
+	service 'nnels::www' do
+		default 'nnels-prod', 'nnels::www'
+	end
+
+	# 3rd-party
+	name 'CAPER'
+	service 'thirdparty::caper' do
+		default 'cilswp', 'thirdparty::cilswp'
+	end
+
+	name 'FILL'
+	service 'thirdparty::fill' do
+		default 'fill', 'thirdparty::fill'
+	end
+
+	name 'WBTW'
+	service 'thirdparty::wbtw' do
+		default 'wbtw', 'thirdparty::wbtw'
+	end
+
+	name 'BCLA'
+	service 'thirdparty::bcla' do
+		default 'bcla', 'thirdparty::bcla'
+	end
+
+	name 'KAPA'
+	service 'thirdparty::kapa' do
+		default 'kapa', 'thirdparty::kapa'
+	end
+
+	name 'KAPA2'
+	service 'thirdparty::kapa2' do
+		default 'kapa2', 'thirdparty::kapa2'
+	end
+
+	# Conifer 
+	name 'Evergreen'
+	service 'conifer::www' do
+		State::NA
+	end
+
+	name 'Reporter'
+	service 'conifer::reporter' do
+		State::NA
+	end
+
+	name 'Fines'
+	service 'conifer::fines' do
+		State::NA
+	end
+
+	name 'Holds'
+	service 'conifer::holds' do
+		State::NA
+	end
+
+	name 'SIP2'
+	service 'conifer::sip2' do
+		State::NA
+	end
+
+	name 'Capacity'
+	service 'conifer::capacity' do
+		State::NA
+	end
+
+	name 'Z39.50'
+	service 'conifer::z3950' do
+		State::NA
+	end
+
+	name 'EDI'
+	service 'conifer::edi' do
+		State::NA
+	end
+
+	# Sadly, we cannot use our regex to pull out the above stuff
+	category 'SITKA' do
+		column 1
+		%w[www reporter fines holds sip2 capacity z3950 edi].map { |s| "sitka::"+s }
+	end
+	category 'Hosted 3rd-parties' do
+		column 1
+		%w[caper fill wbtw bcla kapa kapa2].map { |s| "thirdparty::"+s }
+	end
+	category 'Coop Services' do
+		column 2
+		%w[email webmail www piwik ganeti bcnet dns pbx mysql pgsql ldap].map { |s| 'coop::'+s }
+	end
+	category 'NNELS' do
+		column 2
+		%w[www].map { |s| "nnels::"+s }
+	end
+	category 'Conifer' do
+		column 3
+		%w[www reporter fines holds sip2 capacity z3950 edi].map { |s| "conifer::"+s }
+	end
+end
