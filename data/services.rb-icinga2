@@ -96,9 +96,9 @@ Services do
 	end
 	name 'BCNET'
 	service 'coop::bcnet' do
-		if service_warning? 'router1.sitka.bclibraries.ca', 'coop::bcnet' and service_warning? 'router2.sitka.bclibraries.ca', 'coop::bcnet'
+		if service_warning? 'router3.sitka.bclibraries.ca', 'coop::bcnet' and service_warning? 'router4.sitka.bclibraries.ca', 'coop::bcnet'
 			State::DOWN
-		elsif service_up? 'router1.sitka.bclibraries.ca', 'coop::bcnet' or service_up? 'router2.sitka.bclibraries.ca', 'coop::bcnet'
+		elsif service_up? 'router3.sitka.bclibraries.ca', 'coop::bcnet' or service_up? 'router4.sitka.bclibraries.ca', 'coop::bcnet'
 			State::UP
 		else
 			State::DOWN
