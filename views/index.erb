@@ -5,7 +5,7 @@
         <p class="spacer">
           Status data updated at <em><%= date_format ServiceRegistry.instance.load_date %></em><br />
           Notices updated at <em><%= date_format NoticeStore.instance.load_date %></em><br />
-          Served by <em><%= Socket.gethostname == 'ns-ext' ? 'https://status-ext.libraries.coop' : 'https://status.libraries.coop' %></em>
+          Served by <em><%= Socket.gethostname == 'monitor-ext' ? 'https://status-ext.libraries.coop' : 'https://status.libraries.coop' %></em>
         </p>
 </div>
 
