@@ -74,7 +74,7 @@ Services do
 			State::DOWN
 		end
 	end
-	
+
 	name 'Webmail'
 	service 'coop::webmail' do
 		default 'webmail02.libraries.coop', 'coop::webmail'
@@ -82,12 +82,12 @@ Services do
 
 	name 'CoopWeb'
 	service 'coop::www' do
-		default 'coopweb01.libraries.coop', 'coop::www'
+		default 'coopweb-prod.libraries.coop', 'coop::www'
 	end
 
-	name 'Piwik'
-	service 'coop::piwik' do
-		default 'piwik.libraries.coop', 'coop::piwik'
+	name 'Matomo Analytics'
+	service 'coop::matomo' do
+		default 'matomo.libraries.coop', 'coop::matomo'
 	end
 
 	name 'VM hosting'
@@ -143,7 +143,7 @@ Services do
 		if not service_up? 'Prod-DB-PgSQL-VIP', 'coop::pgsql'
 			status = State::DOWN
 		end
-		status	
+		status
 	end
 
 	name 'Request Tracker'
@@ -154,7 +154,7 @@ Services do
 	# NNELS
 	name 'NNELS'
 	service 'nnels::www' do
-		default 'nnels-prod.libraries.coop', 'nnels::www'
+		default 'nnels-prod2.libraries.coop', 'nnels::www'
 	end
 
 	# 3rd-party
@@ -188,7 +188,7 @@ Services do
 		default 'kapa2.libraries.coop', 'thirdparty::kapa2'
 	end
 
-	# Conifer 
+	# Conifer
 	name 'Evergreen'
 	service 'conifer::www' do
 		default 'cprod1.sitka.bclibraries.ca', 'conifer::capacity'
@@ -236,11 +236,11 @@ Services do
 	end
 	category 'Hosted 3rd-parties' do
 		column 1
-		%w[caper fill wbtw bcla kapa kapa2].map { |s| "thirdparty::"+s }
+		%w[caper fill bcla kapa].map { |s| "thirdparty::"+s }
 	end
 	category 'Coop Services' do
 		column 2
-		%w[email webmail www piwik ganeti bcnet dns pbx mysql pgsql rt].map { |s| 'coop::'+s }
+		%w[email webmail www matomo ganeti bcnet dns pbx mysql pgsql rt].map { |s| 'coop::'+s }
 	end
 	category 'NNELS' do
 		column 2
@@ -248,6 +248,6 @@ Services do
 	end
 	category 'Conifer' do
 		column 3
-		%w[www reporter fines holds sip2 capacity z3950 edi].map { |s| "conifer::"+s }
+		%w[www reporter fines holds sip2 capacity z3950].map { |s| "conifer::"+s }
 	end
 end
