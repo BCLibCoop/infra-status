@@ -65,7 +65,7 @@ Services do
 		default 'eg-util1.libraries.coop', 'sitka::edi'
 	end
 
-	# Coop Services
+	# Co-op Services
 	name 'Email (SMTP/IMAP)'
 	service 'coop::email' do
 		if service_up? 'mail.libraries.coop', 'coop::smtp' and service_up? 'mail.libraries.coop', 'coop::imap'
@@ -238,7 +238,7 @@ Services do
 		column 1
 		%w[caper fill bcla kapa].map { |s| "thirdparty::"+s }
 	end
-	category 'Coop Services' do
+	category 'Co-op Services' do
 		column 2
 		%w[email webmail www matomo ganeti bcnet dns pbx mysql pgsql rt].map { |s| 'coop::'+s }
 	end
